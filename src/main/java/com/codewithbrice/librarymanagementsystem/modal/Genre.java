@@ -32,8 +32,8 @@ public class Genre {
     @NotBlank(message = "Genre Name is Mandatory")
     private String name;
 
-    @Max(value = 500, message = "displayOder must not exceed 500")
-    private Integer displayOder = 0;
+    @Max(value = 500, message = "displayOrder must not exceed 500")
+    private Integer displayOrder = 0;
 
     @Column(nullable = false)
     private Boolean active=true;
