@@ -1,11 +1,15 @@
 package com.codewithbrice.librarymanagementsystem.service.Impl;
 
+import com.codewithbrice.librarymanagementsystem.mapper.GenreMapper;
 import com.codewithbrice.librarymanagementsystem.modal.Genre;
 import com.codewithbrice.librarymanagementsystem.payload.dto.GenreDTO;
 import com.codewithbrice.librarymanagementsystem.repository.GenreRepository;
 import com.codewithbrice.librarymanagementsystem.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,30 +36,15 @@ public class GenreServiceImpl implements GenreService {
 
         Genre savedGenre = genreRepository.save(genre);
 
-        GenreDTO dto = GenreDTO.builder()
-                .id(savedGenre.getId())
-                .code(savedGenre.getCode())
-                .name(savedGenre.getName())
-                .description(savedGenre.getDescription())
-                .displayOrder(savedGenre.getDisplayOrder())
-                .active(savedGenre.getActive())
-                .createdAt(savedGenre.getCreatedAt())
-                .updateAt(savedGenre.getUpdatedAt())
-                .build();
-
-        if (savedGenre.getParentGenre() != null)
-        {
-            dto.setParentGenreId(savedGenre.getParentGenre().getId());
-            dto.setParentGenreName(savedGenre.getParentGenre().getName());
-        }
-        /*
-        dto.setSubGenre(savedGenre.getSubGenres().stream()
-                .filter(subGenre->));
-
-         */
-
-        // dto.setBookCount((long) (savedGenre.getB));
+        GenreDTO dto = GenreMapper.toDTO(savedGenre);
 
         return dto;
+    }
+
+    @Override
+    public List<GenreDTO> getAllGenres() {
+        return genreRepository.findAll().stream()
+                .map(GenreMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
