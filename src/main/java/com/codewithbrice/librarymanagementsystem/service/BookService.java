@@ -11,7 +11,7 @@ public interface BookService {
 
     BookDTO createBook(BookDTO bookDTO) throws BookException;
 
-    public List<BookDTO> createBooksBulk(List<BookDTO> bookDTOs) throws BookException;
+    List<BookDTO> createBooksBulk(List<BookDTO> bookDTOs) throws BookException;
 
     BookDTO getBookById(Long bookId) throws BookException;
     BookDTO getBookByISBN(String isbn) throws BookException;

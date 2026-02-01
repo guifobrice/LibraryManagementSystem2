@@ -1,4 +1,5 @@
 package com.codewithbrice.librarymanagementsystem.service;
 
-public class EmailService {
+public interface EmailService {
+    void sendEmail(String to, String subject, String body);
 }
