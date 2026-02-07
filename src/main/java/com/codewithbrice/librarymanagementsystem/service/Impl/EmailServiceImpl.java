@@ -21,14 +21,14 @@ public class EmailServiceImpl implements EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     @Value("${spring.mail.username}")
-    private String fromEmail;
+    //private String fromEmail;
 
     @Override
     public void sendEmail(String to, String subject, String body) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setFrom(fromEmail);
+            helper.setFrom("briceguifo2017@outlook.com");
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(body, true); // HTML content
