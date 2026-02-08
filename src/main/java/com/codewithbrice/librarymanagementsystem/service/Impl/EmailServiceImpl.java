@@ -6,7 +6,6 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,11 +19,12 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    @Value("${spring.mail.username}")
-    //private String fromEmail;
+    /*@Value("${spring.mail.username}")
+    //private String fromEmail;*/
 
     @Override
     public void sendEmail(String to, String subject, String body) {
+        if(to == null || to.isEmpty()) return;
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -37,10 +37,8 @@ public class EmailServiceImpl implements EmailService {
 
             logger.info("Email envoyé à : {} | Sujet : {}", to, subject);
 
-        } catch (MailException e) {
+        } catch (MailException | MessagingException e) {
             throw new MailSendException("Failed to send email to: " + to, e);
-        } catch (MessagingException e) {
-            throw new MailSendException("MessagingException when sending email to: " + to, e);
         }
     }
 
