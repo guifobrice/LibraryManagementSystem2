@@ -28,7 +28,9 @@ public class SecurityConfig {
                 .sessionManagement(management->
                         management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize ->
-                        Authorize.requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        Authorize
+                                .requestMatchers("/api/subscription-plans/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/**").authenticated()
                                 .anyRequest().permitAll()
                 )

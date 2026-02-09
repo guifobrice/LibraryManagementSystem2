@@ -17,12 +17,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/books")
+@RequestMapping("/api/admin/books")
 public class BookController {
 
     private final BookService bookService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<BookDTO> createBook(
             @Valid @RequestBody BookDTO bookDTO) throws BookException {
         BookDTO createdBook = bookService.createBook(bookDTO);
